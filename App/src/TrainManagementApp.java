@@ -4,80 +4,93 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainManagementApp {
 
- public static void main(String[] args) {
+    public static void main(String[] args) {
 
- System.out.println("=== Train Consist Management App ===");
+        System.out.println("=== Train Consist Management App ===");
 
- List<String> trainConsist = new ArrayList<>();
+        List<String> trainConsist = new ArrayList<>();
 
- System.out.println("Train consist initialized.");
+        System.out.println("Train consist initialized.");
+        System.out.println("Initial bogie count: " + trainConsist.size());
 
- System.out.println("Initial bogie count: " + trainConsist.size());
+        ArrayList<String> passengerBogies = new ArrayList<>();
 
- System.out.println("\nAdding Passenger Bogies...");
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("AC Chair");
+        passengerBogies.add("First Class");
 
- ArrayList<String> passengerBogies = new ArrayList<>();
+        System.out.println(passengerBogies);
 
- passengerBogies.add("Sleeper");
- passengerBogies.add("AC Chair");
- passengerBogies.add("First Class");
+        passengerBogies.remove("AC Chair");
 
- System.out.println(passengerBogies);
+        System.out.println(passengerBogies);
 
- passengerBogies.remove("AC Chair");
+        if (passengerBogies.contains("Sleeper")) {
 
- System.out.println(passengerBogies);
+            System.out.println("Sleeper bogie exists.");
 
- if (passengerBogies.contains("Sleeper")) {
+        }
 
- System.out.println("Sleeper bogie exists.");
+        System.out.println(passengerBogies);
 
- }
+        Set<String> bogieIDs = new HashSet<>();
 
- System.out.println(passengerBogies);
+        bogieIDs.add("BG101");
+        bogieIDs.add("BG102");
+        bogieIDs.add("BG103");
+        bogieIDs.add("BG101");
+        bogieIDs.add("BG102");
 
- Set<String> bogieIDs = new HashSet<>();
+        System.out.println(bogieIDs);
 
- bogieIDs.add("BG101");
- bogieIDs.add("BG102");
- bogieIDs.add("BG103");
- bogieIDs.add("BG101");
- bogieIDs.add("BG102");
+        LinkedList<String> orderedTrain = new LinkedList<>();
 
- System.out.println(bogieIDs);
+        orderedTrain.add("Engine");
+        orderedTrain.add("Sleeper");
+        orderedTrain.add("AC");
+        orderedTrain.add("Cargo");
+        orderedTrain.add("Guard");
 
- LinkedList<String> orderedTrain = new LinkedList<>();
+        System.out.println(orderedTrain);
 
- orderedTrain.add("Engine");
- orderedTrain.add("Sleeper");
- orderedTrain.add("AC");
- orderedTrain.add("Cargo");
- orderedTrain.add("Guard");
+        orderedTrain.add(2, "Pantry Car");
 
- System.out.println(orderedTrain);
+        System.out.println(orderedTrain);
 
- orderedTrain.add(2, "Pantry Car");
+        orderedTrain.removeFirst();
+        orderedTrain.removeLast();
 
- System.out.println(orderedTrain);
+        System.out.println(orderedTrain);
 
- orderedTrain.removeFirst();
- orderedTrain.removeLast();
+        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
 
- System.out.println(orderedTrain);
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
+        trainFormation.add("Sleeper");
 
- LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        System.out.println(trainFormation);
 
- trainFormation.add("Engine");
- trainFormation.add("Sleeper");
- trainFormation.add("Cargo");
- trainFormation.add("Guard");
- trainFormation.add("Sleeper");
+        HashMap<String, Integer> bogieCapacity = new HashMap<>();
 
- System.out.println(trainFormation);
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 54);
+        bogieCapacity.put("First Class", 24);
 
- }
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+
+            System.out.println(entry.getKey() + " Capacity: " + entry.getValue());
+
+        }
+
+        System.out.println("Program continues...");
+
+    }
 
 }
