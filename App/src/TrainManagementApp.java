@@ -3,21 +3,56 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
+// =========================
+// UC14 Custom Exception
+// =========================
+
+class InvalidCapacityException extends Exception {
+
+    public InvalidCapacityException(String message) {
+
+        super(message);
+
+    }
+
+}
+
+// =========================
+// Bogie Class (Passenger)
+// =========================
+
 class Bogie {
 
     String name;
     int capacity;
 
-    Bogie(String name, int capacity) {
+    Bogie(String name, int capacity)
+            throws InvalidCapacityException {
+
+        if (capacity <= 0) {
+
+            throw new InvalidCapacityException(
+                    "Capacity must be greater than zero"
+            );
+
+        }
+
         this.name = name;
         this.capacity = capacity;
+
     }
 
     public String toString() {
+
         return name + " - " + capacity;
+
     }
 
 }
+
+// =========================
+// Goods Bogie Class
+// =========================
 
 class GoodsBogie {
 
@@ -25,8 +60,10 @@ class GoodsBogie {
     String cargo;
 
     GoodsBogie(String type, String cargo) {
+
         this.type = type;
         this.cargo = cargo;
+
     }
 
 }
@@ -39,21 +76,35 @@ public class TrainManagementApp {
 
         List<Bogie> bogieList = new ArrayList<>();
 
-        bogieList.add(new Bogie("Sleeper", 72));
-        bogieList.add(new Bogie("AC Chair", 54));
-        bogieList.add(new Bogie("First Class", 24));
-        bogieList.add(new Bogie("Sleeper", 72));
+        try {
+
+            // Valid Bogies
+
+            bogieList.add(new Bogie("Sleeper", 72));
+            bogieList.add(new Bogie("AC Chair", 54));
+            bogieList.add(new Bogie("First Class", 24));
+            bogieList.add(new Bogie("Sleeper", 72));
+
+            // Uncomment to test exception
+            // bogieList.add(new Bogie("Invalid", -10));
+
+        } catch (InvalidCapacityException e) {
+
+            System.out.println("Error: " + e.getMessage());
+
+        }
 
         // =========================
         // UC10 Reduce
         // =========================
 
-        int totalSeats = bogieList
-                .stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+        int totalSeats =
+                bogieList.stream()
+                        .map(b -> b.capacity)
+                        .reduce(0, Integer::sum);
 
-        System.out.println("Total Seating Capacity: " + totalSeats);
+        System.out.println("Total Seating Capacity: "
+                + totalSeats);
 
         // =========================
         // UC11 Regex Validation
@@ -98,11 +149,29 @@ public class TrainManagementApp {
         // UC12 Safety Check
         // =========================
 
-        List<GoodsBogie> goodsList = new ArrayList<>();
+        List<GoodsBogie> goodsList =
+                new ArrayList<>();
 
-        goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        goodsList.add(new GoodsBogie("Open", "Coal"));
-        goodsList.add(new GoodsBogie("Box", "Grain"));
+        goodsList.add(
+                new GoodsBogie(
+                        "Cylindrical",
+                        "Petroleum"
+                )
+        );
+
+        goodsList.add(
+                new GoodsBogie(
+                        "Open",
+                        "Coal"
+                )
+        );
+
+        goodsList.add(
+                new GoodsBogie(
+                        "Box",
+                        "Grain"
+                )
+        );
 
         boolean isSafe =
                 goodsList.stream()
@@ -113,34 +182,58 @@ public class TrainManagementApp {
 
         if (isSafe) {
 
-            System.out.println("Train Safety Status: SAFE");
+            System.out.println(
+                    "Train Safety Status: SAFE"
+            );
 
         } else {
 
-            System.out.println("Train Safety Status: UNSAFE");
+            System.out.println(
+                    "Train Safety Status: UNSAFE"
+            );
 
         }
 
         // =========================
-        // UC13 Performance Comparison
+        // UC13 Performance Compare
         // =========================
 
-        List<Bogie> largeList = new ArrayList<>();
+        List<Bogie> largeList =
+                new ArrayList<>();
 
-        // Create large dataset
-        for (int i = 0; i < 10000; i++) {
+        try {
 
-            largeList.add(new Bogie("Sleeper", 72));
-            largeList.add(new Bogie("AC Chair", 54));
-            largeList.add(new Bogie("First Class", 24));
+            for (int i = 0; i < 1000; i++) {
+
+                largeList.add(
+                        new Bogie("Sleeper", 72)
+                );
+
+                largeList.add(
+                        new Bogie("AC Chair", 54)
+                );
+
+                largeList.add(
+                        new Bogie("First Class", 24)
+                );
+
+            }
+
+        } catch (InvalidCapacityException e) {
+
+            System.out.println(
+                    "Error: " + e.getMessage()
+            );
 
         }
 
         // Loop Performance
 
-        long loopStart = System.nanoTime();
+        long loopStart =
+                System.nanoTime();
 
-        List<Bogie> loopFiltered = new ArrayList<>();
+        List<Bogie> loopFiltered =
+                new ArrayList<>();
 
         for (Bogie b : largeList) {
 
@@ -152,28 +245,40 @@ public class TrainManagementApp {
 
         }
 
-        long loopEnd = System.nanoTime();
+        long loopEnd =
+                System.nanoTime();
 
-        long loopTime = loopEnd - loopStart;
+        long loopTime =
+                loopEnd - loopStart;
 
-        System.out.println("Loop Filtering Time: "
-                + loopTime + " ns");
+        System.out.println(
+                "Loop Filtering Time: "
+                        + loopTime + " ns"
+        );
 
         // Stream Performance
 
-        long streamStart = System.nanoTime();
+        long streamStart =
+                System.nanoTime();
 
         List<Bogie> streamFiltered =
                 largeList.stream()
-                        .filter(b -> b.capacity > 60)
-                        .collect(Collectors.toList());
+                        .filter(b ->
+                                b.capacity > 60)
+                        .collect(
+                                Collectors.toList()
+                        );
 
-        long streamEnd = System.nanoTime();
+        long streamEnd =
+                System.nanoTime();
 
-        long streamTime = streamEnd - streamStart;
+        long streamTime =
+                streamEnd - streamStart;
 
-        System.out.println("Stream Filtering Time: "
-                + streamTime + " ns");
+        System.out.println(
+                "Stream Filtering Time: "
+                        + streamTime + " ns"
+        );
 
     }
 
