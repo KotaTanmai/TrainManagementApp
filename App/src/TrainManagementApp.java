@@ -19,6 +19,23 @@ class Bogie {
 
 }
 
+// NEW CLASS for UC12
+class GoodsBogie {
+
+    String type;
+    String cargo;
+
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+
+    public String toString() {
+        return type + " carrying " + cargo;
+    }
+
+}
+
 public class TrainManagementApp {
 
     public static void main(String[] args) {
@@ -56,7 +73,6 @@ public class TrainManagementApp {
         bogieIDs.add("BG102");
         bogieIDs.add("BG103");
         bogieIDs.add("BG101");
-        bogieIDs.add("BG102");
 
         System.out.println(bogieIDs);
 
@@ -85,7 +101,6 @@ public class TrainManagementApp {
         trainFormation.add("Sleeper");
         trainFormation.add("Cargo");
         trainFormation.add("Guard");
-        trainFormation.add("Sleeper");
 
         System.out.println(trainFormation);
 
@@ -167,6 +182,33 @@ public class TrainManagementApp {
         } else {
 
             System.out.println("Invalid Cargo Code: " + cargoCode);
+
+        }
+
+        // =========================
+        // UC12 SAFETY CHECK
+        // =========================
+
+        List<GoodsBogie> goodsList = new ArrayList<>();
+
+        goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsList.add(new GoodsBogie("Open", "Coal"));
+        goodsList.add(new GoodsBogie("Box", "Grain"));
+
+        boolean isSafe = goodsList
+                .stream()
+                .allMatch(g ->
+                        !g.type.equals("Cylindrical")
+                                || g.cargo.equals("Petroleum")
+                );
+
+        if (isSafe) {
+
+            System.out.println("Train Safety Status: SAFE");
+
+        } else {
+
+            System.out.println("Train Safety Status: UNSAFE");
 
         }
 
