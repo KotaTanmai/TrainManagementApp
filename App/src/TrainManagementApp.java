@@ -3,101 +3,81 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 public class TrainManagementApp {
 
-    public static void main(String[] args) {
+ public static void main(String[] args) {
 
-        // =============================
-        // UC1: Initialize Train
-        // =============================
+ System.out.println("=== Train Consist Management App ===");
 
-        System.out.println("=== Train Consist Management App ===");
+ List<String> trainConsist = new ArrayList<>();
 
-        List<String> trainConsist = new ArrayList<>();
+ System.out.println("Train consist initialized.");
 
-        System.out.println("Train consist initialized.");
-        System.out.println("Initial bogie count: " + trainConsist.size());
+ System.out.println("Initial bogie count: " + trainConsist.size());
 
-        // =============================
-        // UC2: Passenger Bogies
-        // =============================
+ System.out.println("\nAdding Passenger Bogies...");
 
-        System.out.println("\nAdding Passenger Bogies...");
+ ArrayList<String> passengerBogies = new ArrayList<>();
 
-        ArrayList<String> passengerBogies = new ArrayList<>();
+ passengerBogies.add("Sleeper");
+ passengerBogies.add("AC Chair");
+ passengerBogies.add("First Class");
 
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+ System.out.println(passengerBogies);
 
-        System.out.println("Passenger Bogies:");
-        System.out.println(passengerBogies);
+ passengerBogies.remove("AC Chair");
 
-        passengerBogies.remove("AC Chair");
+ System.out.println(passengerBogies);
 
-        System.out.println("\nAfter Removing AC Chair:");
-        System.out.println(passengerBogies);
+ if (passengerBogies.contains("Sleeper")) {
 
-        if (passengerBogies.contains("Sleeper")) {
+ System.out.println("Sleeper bogie exists.");
 
-            System.out.println("\nSleeper bogie exists.");
+ }
 
-        }
+ System.out.println(passengerBogies);
 
-        System.out.println("\nFinal Passenger List:");
-        System.out.println(passengerBogies);
+ Set<String> bogieIDs = new HashSet<>();
 
-        // =============================
-        // UC3: Unique Bogie IDs
-        // =============================
+ bogieIDs.add("BG101");
+ bogieIDs.add("BG102");
+ bogieIDs.add("BG103");
+ bogieIDs.add("BG101");
+ bogieIDs.add("BG102");
 
-        System.out.println("\nTracking Unique Bogie IDs...");
+ System.out.println(bogieIDs);
 
-        Set<String> bogieIDs = new HashSet<>();
+ LinkedList<String> orderedTrain = new LinkedList<>();
 
-        bogieIDs.add("BG101");
-        bogieIDs.add("BG102");
-        bogieIDs.add("BG103");
-        bogieIDs.add("BG101"); // duplicate
-        bogieIDs.add("BG102"); // duplicate
+ orderedTrain.add("Engine");
+ orderedTrain.add("Sleeper");
+ orderedTrain.add("AC");
+ orderedTrain.add("Cargo");
+ orderedTrain.add("Guard");
 
-        System.out.println("Unique Bogie IDs:");
-        System.out.println(bogieIDs);
+ System.out.println(orderedTrain);
 
-        // =============================
-        // UC4: Ordered Train (LinkedList)
-        // =============================
+ orderedTrain.add(2, "Pantry Car");
 
-        System.out.println("\nMaintaining Ordered Train Consist...");
+ System.out.println(orderedTrain);
 
-        LinkedList<String> orderedTrain = new LinkedList<>();
+ orderedTrain.removeFirst();
+ orderedTrain.removeLast();
 
-        // Add bogies
-        orderedTrain.add("Engine");
-        orderedTrain.add("Sleeper");
-        orderedTrain.add("AC");
-        orderedTrain.add("Cargo");
-        orderedTrain.add("Guard");
+ System.out.println(orderedTrain);
 
-        System.out.println("Initial Train Order:");
-        System.out.println(orderedTrain);
+ LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
 
-        // Insert Pantry Car at position 2
-        orderedTrain.add(2, "Pantry Car");
+ trainFormation.add("Engine");
+ trainFormation.add("Sleeper");
+ trainFormation.add("Cargo");
+ trainFormation.add("Guard");
+ trainFormation.add("Sleeper");
 
-        System.out.println("\nAfter Adding Pantry Car:");
-        System.out.println(orderedTrain);
+ System.out.println(trainFormation);
 
-        // Remove first and last
-        orderedTrain.removeFirst();
-        orderedTrain.removeLast();
-
-        System.out.println("\nFinal Train Order:");
-        System.out.println(orderedTrain);
-
-        System.out.println("\nProgram continues...");
-
-    }
+ }
 
 }
