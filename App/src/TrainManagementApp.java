@@ -112,6 +112,7 @@ public class TrainManagementApp {
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 54));
         bogieList.add(new Bogie("First Class", 24));
+        bogieList.add(new Bogie("Sleeper", 72));
 
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
@@ -123,6 +124,12 @@ public class TrainManagementApp {
                 .collect(Collectors.toList());
 
         System.out.println(filteredBogies);
+
+        Map<String, List<Bogie>> groupedBogies =
+                bogieList.stream()
+                        .collect(Collectors.groupingBy(b -> b.name));
+
+        System.out.println(groupedBogies);
 
         System.out.println("Program continues...");
 
