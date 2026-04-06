@@ -19,7 +19,6 @@ class Bogie {
 
 }
 
-// NEW CLASS for UC12
 class GoodsBogie {
 
     String type;
@@ -30,10 +29,6 @@ class GoodsBogie {
         this.cargo = cargo;
     }
 
-    public String toString() {
-        return type + " carrying " + cargo;
-    }
-
 }
 
 public class TrainManagementApp {
@@ -42,80 +37,6 @@ public class TrainManagementApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> trainConsist = new ArrayList<>();
-
-        System.out.println("Train consist initialized.");
-        System.out.println("Initial bogie count: " + trainConsist.size());
-
-        ArrayList<String> passengerBogies = new ArrayList<>();
-
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
-
-        System.out.println(passengerBogies);
-
-        passengerBogies.remove("AC Chair");
-
-        System.out.println(passengerBogies);
-
-        if (passengerBogies.contains("Sleeper")) {
-
-            System.out.println("Sleeper bogie exists.");
-
-        }
-
-        System.out.println(passengerBogies);
-
-        Set<String> bogieIDs = new HashSet<>();
-
-        bogieIDs.add("BG101");
-        bogieIDs.add("BG102");
-        bogieIDs.add("BG103");
-        bogieIDs.add("BG101");
-
-        System.out.println(bogieIDs);
-
-        LinkedList<String> orderedTrain = new LinkedList<>();
-
-        orderedTrain.add("Engine");
-        orderedTrain.add("Sleeper");
-        orderedTrain.add("AC");
-        orderedTrain.add("Cargo");
-        orderedTrain.add("Guard");
-
-        System.out.println(orderedTrain);
-
-        orderedTrain.add(2, "Pantry Car");
-
-        System.out.println(orderedTrain);
-
-        orderedTrain.removeFirst();
-        orderedTrain.removeLast();
-
-        System.out.println(orderedTrain);
-
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
-
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
-
-        System.out.println(trainFormation);
-
-        HashMap<String, Integer> bogieCapacity = new HashMap<>();
-
-        bogieCapacity.put("Sleeper", 72);
-        bogieCapacity.put("AC Chair", 54);
-        bogieCapacity.put("First Class", 24);
-
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-
-            System.out.println(entry.getKey() + " Capacity: " + entry.getValue());
-
-        }
-
         List<Bogie> bogieList = new ArrayList<>();
 
         bogieList.add(new Bogie("Sleeper", 72));
@@ -123,22 +44,9 @@ public class TrainManagementApp {
         bogieList.add(new Bogie("First Class", 24));
         bogieList.add(new Bogie("Sleeper", 72));
 
-        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
-
-        System.out.println(bogieList);
-
-        List<Bogie> filteredBogies = bogieList
-                .stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
-
-        System.out.println(filteredBogies);
-
-        Map<String, List<Bogie>> groupedBogies =
-                bogieList.stream()
-                        .collect(Collectors.groupingBy(b -> b.name));
-
-        System.out.println(groupedBogies);
+        // =========================
+        // UC10 Reduce
+        // =========================
 
         int totalSeats = bogieList
                 .stream()
@@ -147,46 +55,47 @@ public class TrainManagementApp {
 
         System.out.println("Total Seating Capacity: " + totalSeats);
 
-        System.out.println("Program continues...");
-
         // =========================
-        // UC11 REGEX VALIDATION
+        // UC11 Regex Validation
         // =========================
 
         String trainID = "TRN-1234";
         String cargoCode = "PET-AB";
 
-        String trainPatternString = "TRN-\\d{4}";
-        String cargoPatternString = "PET-[A-Z]{2}";
+        Pattern trainPattern =
+                Pattern.compile("TRN-\\d{4}");
 
-        Pattern trainPattern = Pattern.compile(trainPatternString);
-        Pattern cargoPattern = Pattern.compile(cargoPatternString);
+        Pattern cargoPattern =
+                Pattern.compile("PET-[A-Z]{2}");
 
-        Matcher trainMatcher = trainPattern.matcher(trainID);
-        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+        Matcher trainMatcher =
+                trainPattern.matcher(trainID);
+
+        Matcher cargoMatcher =
+                cargoPattern.matcher(cargoCode);
 
         if (trainMatcher.matches()) {
 
-            System.out.println("Valid Train ID: " + trainID);
+            System.out.println("Valid Train ID");
 
         } else {
 
-            System.out.println("Invalid Train ID: " + trainID);
+            System.out.println("Invalid Train ID");
 
         }
 
         if (cargoMatcher.matches()) {
 
-            System.out.println("Valid Cargo Code: " + cargoCode);
+            System.out.println("Valid Cargo Code");
 
         } else {
 
-            System.out.println("Invalid Cargo Code: " + cargoCode);
+            System.out.println("Invalid Cargo Code");
 
         }
 
         // =========================
-        // UC12 SAFETY CHECK
+        // UC12 Safety Check
         // =========================
 
         List<GoodsBogie> goodsList = new ArrayList<>();
@@ -195,12 +104,12 @@ public class TrainManagementApp {
         goodsList.add(new GoodsBogie("Open", "Coal"));
         goodsList.add(new GoodsBogie("Box", "Grain"));
 
-        boolean isSafe = goodsList
-                .stream()
-                .allMatch(g ->
-                        !g.type.equals("Cylindrical")
-                                || g.cargo.equals("Petroleum")
-                );
+        boolean isSafe =
+                goodsList.stream()
+                        .allMatch(g ->
+                                !g.type.equals("Cylindrical")
+                                        || g.cargo.equals("Petroleum")
+                        );
 
         if (isSafe) {
 
@@ -211,6 +120,60 @@ public class TrainManagementApp {
             System.out.println("Train Safety Status: UNSAFE");
 
         }
+
+        // =========================
+        // UC13 Performance Comparison
+        // =========================
+
+        List<Bogie> largeList = new ArrayList<>();
+
+        // Create large dataset
+        for (int i = 0; i < 10000; i++) {
+
+            largeList.add(new Bogie("Sleeper", 72));
+            largeList.add(new Bogie("AC Chair", 54));
+            largeList.add(new Bogie("First Class", 24));
+
+        }
+
+        // Loop Performance
+
+        long loopStart = System.nanoTime();
+
+        List<Bogie> loopFiltered = new ArrayList<>();
+
+        for (Bogie b : largeList) {
+
+            if (b.capacity > 60) {
+
+                loopFiltered.add(b);
+
+            }
+
+        }
+
+        long loopEnd = System.nanoTime();
+
+        long loopTime = loopEnd - loopStart;
+
+        System.out.println("Loop Filtering Time: "
+                + loopTime + " ns");
+
+        // Stream Performance
+
+        long streamStart = System.nanoTime();
+
+        List<Bogie> streamFiltered =
+                largeList.stream()
+                        .filter(b -> b.capacity > 60)
+                        .collect(Collectors.toList());
+
+        long streamEnd = System.nanoTime();
+
+        long streamTime = streamEnd - streamStart;
+
+        System.out.println("Stream Filtering Time: "
+                + streamTime + " ns");
 
     }
 
