@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainManagementApp {
 
@@ -49,24 +49,52 @@ public class TrainManagementApp {
         System.out.println(passengerBogies);
 
         // =============================
-        // UC3: Unique Bogie IDs (HashSet)
+        // UC3: Unique Bogie IDs
         // =============================
 
         System.out.println("\nTracking Unique Bogie IDs...");
 
-        // Create HashSet
         Set<String> bogieIDs = new HashSet<>();
 
-        // Add IDs (including duplicates)
         bogieIDs.add("BG101");
         bogieIDs.add("BG102");
         bogieIDs.add("BG103");
         bogieIDs.add("BG101"); // duplicate
         bogieIDs.add("BG102"); // duplicate
 
-        // Display Unique IDs
         System.out.println("Unique Bogie IDs:");
         System.out.println(bogieIDs);
+
+        // =============================
+        // UC4: Ordered Train (LinkedList)
+        // =============================
+
+        System.out.println("\nMaintaining Ordered Train Consist...");
+
+        LinkedList<String> orderedTrain = new LinkedList<>();
+
+        // Add bogies
+        orderedTrain.add("Engine");
+        orderedTrain.add("Sleeper");
+        orderedTrain.add("AC");
+        orderedTrain.add("Cargo");
+        orderedTrain.add("Guard");
+
+        System.out.println("Initial Train Order:");
+        System.out.println(orderedTrain);
+
+        // Insert Pantry Car at position 2
+        orderedTrain.add(2, "Pantry Car");
+
+        System.out.println("\nAfter Adding Pantry Car:");
+        System.out.println(orderedTrain);
+
+        // Remove first and last
+        orderedTrain.removeFirst();
+        orderedTrain.removeLast();
+
+        System.out.println("\nFinal Train Order:");
+        System.out.println(orderedTrain);
 
         System.out.println("\nProgram continues...");
 
