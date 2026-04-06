@@ -131,6 +131,13 @@ public class TrainManagementApp {
 
         System.out.println(groupedBogies);
 
+        int totalSeats = bogieList
+                .stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+
+        System.out.println("Total Seating Capacity: " + totalSeats);
+
         System.out.println("Program continues...");
 
     }
